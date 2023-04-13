@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container d-flex justify-content-center ">
+
+        <div class="card " style="width: 32rem; border:5px black solid">
+            <div class="card-body">
+                {% if messages %}
+                {% for message in messages %}
+                {% if message.tags %} <span class="text-{{ message.tags }}">{{ message }}</span><br>{% endif %}
+                {% endfor %}
+                {% endif %}
+                <h5 class="card-title">Score: <b>{{score}}</b> / 10</h5>
+                <p class="card-text">Total attempt : <b>{{total_attempt}}</b> Out of <b>10</b></p>
+                <p class="card-text">Correct answers: {{correct}}</p>
+                <p class="card-text">Incorrect answers: {{wrong}}</p>
+                <h5>All the best for next quiz!</h5>
+                <H5><a class="nav-link" href="{% url 'home' %}">Give Test Again</a></H5>
+            </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+#qid{
+    font-weight: 700;
+}
+.form-label{
+    font-size:20px;
+    font-weight: 600;
+}
+#addque{
+    text-align: center;
+    margin-bottom: 15px;
+    margin-top: 10;
+    color:blue;
+}
+
+</style>
+<div class="container d-flex justify-content-center">
+    <div class="col-md-6 ">
+        <h1 id="addque">Add Question</h1>
+        <div class="card card-body">
+            <form action="" method="POST" id="myForm">
+                {% csrf_token %}
+                <div class="forms">
+                    <div class="mb-3">
+                        <label class="form-label" id="qid">Question </label>
+                        <input type="text" name="question" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Option 1:</label>
+                        <input type="text" name="op1" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Option 2:</label>
+                        <input type="text" name="op2" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Option 3:</label>
+                        <input type="text" name="op3" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Option 4:</label>
+                        <input type="text" name="op4" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Answer</label>
+                        <select name="ans" class="form-control" required>
+                            <option value="">Select an answer:</option>
+                            <option value="a">A</option>
+                            <option value="b">B</option>
+                            <option value="c">C</option>
+                            <option value="d">D</option>
+                        </select>
+                    </div>
+                    <hr>
+                </div>
+                <input type="submit" name="submit" class="btn btn-primary btn-sm">
+                <input type="button" name="add_another" value="Add Another question" class="btn btn-primary btn-sm add-another-btn">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    $("#exam").addClass("active")
+    const form = document.getElementById('myForm');
+    const submitButton = form.querySelector('.add-another-btn');
+    submitButton.disabled = true;
+
+    form.addEventListener('input', () => {
+        const question = document.querySelectorAll('input[name="question"]');
+        const op1 = document.querySelectorAll('input[name="op1"]');
+        const op2 = document.querySelectorAll('input[name="op2"]');
+        const op3 = document.querySelectorAll('input[name="op3"]');
+        const op4 = document.querySelectorAll('input[name="op4"]');
+        const ans = document.querySelectorAll('select[name="ans"]');
+
+        const allFieldsFilled = question[question.length - 1].value && op1[op1.length - 1].value && op2[op2.length - 1].value && op3[op3.length - 1].value && op4[op4.length - 1].value&& ans[ans.length - 1].value;
+        submitButton.disabled = !allFieldsFilled;
+    });
+
+
+    submitButton.addEventListener("click", function () {
+        let forms = document.getElementsByClassName('forms')
+        forms = forms[forms.length - 1]
+        clone = forms.cloneNode(true);
+        clone.querySelectorAll('input').forEach(function (field) {
+            field.value = '';
+        });
+        forms.after(clone);
+        submitButton.disabled = true;
+    });
+
+
+</script>
+
+{% endblock %}
